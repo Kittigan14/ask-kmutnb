@@ -20,19 +20,12 @@ export default function HistoryPopup({ onClose, onSessionChange }) {
   useEffect(() => {
     loadSessions();
     updateSessionLimit();
-    // เพิ่ม delay เล็กน้อยเพื่อให้ animation ทำงาน
     setTimeout(() => setIsVisible(true), 10);
   }, []);
 
-  // เพิ่ม useEffect ใหม่เพื่อ debug
-  useEffect(() => {
-    console.log('📊 Sessions state updated:', sessions.length);
-    console.log('🔒 Clear All disabled?', sessions.length === 0);
-  }, [sessions]);
-
   const loadSessions = () => {
     const allSessions = getAllSessions();
-    console.log('🔄 Loading sessions:', allSessions.length); // Debug
+    console.log('🔄 Loading sessions:', allSessions.length);
     setSessions(allSessions);
   };
 
@@ -42,7 +35,6 @@ export default function HistoryPopup({ onClose, onSessionChange }) {
   };
 
   const handleNewChat = () => {
-    // ตรวจสอบว่าสามารถสร้างแชทใหม่ได้หรือไม่
     if (!canCreateNewSession()) {
       setShowLimitPopup(true);
       return;
@@ -60,7 +52,6 @@ export default function HistoryPopup({ onClose, onSessionChange }) {
   const handleClearAll = () => {
     // console.log('🗑️ Clear All clicked');
     // console.log('📊 Current sessions:', sessions.length);
-    // console.log('📊 Actual sessions in storage:', getAllSessions().length);
     
     if (sessions.length === 0) {
       alert('ไม่มีแชทให้ลบ');
@@ -71,12 +62,23 @@ export default function HistoryPopup({ onClose, onSessionChange }) {
   };
 
   const confirmClearAll = () => {
-    clearAllSessions();
-    setSessions([]); // อัปเดต state ทันที
-    updateSessionLimit();
-    onSessionChange([]);
-    setShowConfirm(false);
-    // ไม่ต้องปิด popup ให้ผู้ใช้เห็นว่าลบหมดแล้ว
+    console.log('✅ Confirming clear all...');
+    
+    const success = clearAllSessions();
+    
+    if (success) {
+      setSessions([]);
+      updateSessionLimit();
+      onSessionChange([]);
+      setShowConfirm(false);
+      
+      console.log('✅ All sessions cleared successfully');
+      
+      alert('ลบประวัติการสนทนาทั้งหมดเรียบร้อยแล้ว');
+    } else {
+      console.error('❌ Failed to clear sessions');
+      alert('เกิดข้อผิดพลาดในการลบ กรุณาลองใหม่อีกครั้ง');
+    }
   };
 
   const handleSelectSession = (sessionId) => {
@@ -89,13 +91,18 @@ export default function HistoryPopup({ onClose, onSessionChange }) {
   const handleDeleteSession = (e, sessionId) => {
     e.stopPropagation();
     if (window.confirm('ต้องการลบการสนทนานี้หรือไม่?')) {
-      deleteSession(sessionId);
-      loadSessions();
-      updateSessionLimit();
+      const success = deleteSession(sessionId);
       
-      const allSessions = getAllSessions();
-      if (allSessions.length === 0) {
-        onSessionChange([]);
+      if (success) {
+        loadSessions();
+        updateSessionLimit();
+        
+        const allSessions = getAllSessions();
+        if (allSessions.length === 0) {
+          onSessionChange([]);
+        }
+      } else {
+        alert('เกิดข้อผิดพลาดในการลบ');
       }
     }
   };
@@ -135,7 +142,7 @@ export default function HistoryPopup({ onClose, onSessionChange }) {
           <i className="fa-solid fa-clock-rotate-left"></i> ประวัติแชท
         </h3>
 
-        {/* Session Counter - แสดงจำนวนแชท */}
+        {/* Session Counter */}
         <div className={`session-counter ${sessionLimit.isFull ? 'full' : ''}`}>
           <div className="session-counter-text">
             <i className="fa-solid fa-comments"></i>
@@ -162,15 +169,15 @@ export default function HistoryPopup({ onClose, onSessionChange }) {
             <i className="fa-solid fa-plus"></i> 
             <span>New Chat</span>
           </button>
-          {/* <button 
+          <button 
             className="action-btn clear-chat-btn" 
             onClick={handleClearAll}
-            disabled={sessionLimit.current === 0}
-            title={sessionLimit.current === 0 ? 'ไม่มีแชทให้ลบ' : 'ลบแชททั้งหมด'}
+            disabled={sessions.length === 0}
+            title={sessions.length === 0 ? 'ไม่มีแชทให้ลบ' : 'ลบแชททั้งหมด'}
           >
             <i className="fa-solid fa-trash"></i> 
             <span>Clear All</span>
-          </button> */}
+          </button>
         </div>
 
         <ul id="sessionList">
@@ -215,12 +222,25 @@ export default function HistoryPopup({ onClose, onSessionChange }) {
 
       {/* Confirm Clear All Dialog */}
       {showConfirm && (
-        <div className="confirm-dialog">
+        <div className="confirm-dialog" onClick={(e) => {
+          if (e.target.className === 'confirm-dialog') {
+            setShowConfirm(false);
+          }
+        }}>
           <div className="confirm-content">
-            <p>ต้องการลบประวัติการสนทนาทั้งหมดหรือไม่?</p>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🗑️</div>
+            <h3 style={{ marginBottom: '1rem', color: '#2c2c2c' }}>ลบประวัติทั้งหมด?</h3>
+            <p style={{ marginBottom: '1.5rem', color: '#666' }}>
+              คุณแน่ใจหรือไม่ว่าต้องการลบประวัติการสนทนาทั้งหมด ({sessions.length} แชท)?<br/>
+              <strong>การกระทำนี้ไม่สามารถย้อนกลับได้</strong>
+            </p>
             <div className="confirm-buttons">
-              <button onClick={confirmClearAll} className="btn-confirm">ยืนยัน</button>
-              <button onClick={() => setShowConfirm(false)} className="btn-cancel">ยกเลิก</button>
+              <button onClick={confirmClearAll} className="btn-confirm">
+                <i className="fa-solid fa-check"></i> ยืนยันลบ
+              </button>
+              <button onClick={() => setShowConfirm(false)} className="btn-cancel">
+                <i className="fa-solid fa-times"></i> ยกเลิก
+              </button>
             </div>
           </div>
         </div>
@@ -228,7 +248,11 @@ export default function HistoryPopup({ onClose, onSessionChange }) {
 
       {/* Session Limit Popup */}
       {showLimitPopup && (
-        <div className="session-limit-popup">
+        <div className="session-limit-popup" onClick={(e) => {
+          if (e.target.className === 'session-limit-popup') {
+            setShowLimitPopup(false);
+          }
+        }}>
           <div className="session-limit-content">
             <div className="session-limit-icon">
               <i className="fa-solid fa-exclamation-triangle"></i>

@@ -2,7 +2,6 @@ import React from "react";
 import logo from "../assets/images/logo_kmutnb.png";
 
 export default function Navbar({ toggleMenu, openPopup, menuOpen }) {
-  
   const handleMenuClick = (popupName) => (e) => {
     e.preventDefault();
     openPopup(popupName);
@@ -26,7 +25,12 @@ export default function Navbar({ toggleMenu, openPopup, menuOpen }) {
 
       <ul className={`menu-items ${menuOpen ? "active" : ""}`}>
         <li>
-          <a href="#" onClick={(e) => { e.preventDefault(); }}>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
             <i className="fa-solid fa-comment"></i>
             <span>แชท</span>
           </a>

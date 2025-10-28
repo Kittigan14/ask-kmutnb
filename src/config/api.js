@@ -1,10 +1,3 @@
-// src/config/api.js
-
-/**
- * API Configuration สำหรับจัดการ CORS และ Webhook endpoints
- */
-
-// CORS Proxy options (สำหรับ development)
 const CORS_PROXIES = {
   allorigins: 'https://api.allorigins.win/raw?url=',
   corsproxy: 'https://corsproxy.io/?',
@@ -12,16 +5,12 @@ const CORS_PROXIES = {
 };
 
 export const API_CONFIG = {
-  // n8n Webhook URL
-  N8N_WEBHOOK: 'https://n8n.r0und.xyz/webhook-test/9a9a560b-1ae9-4bcf-a3ce-3aac8b635830',
+  N8N_WEBHOOK: 'https://n8n.r0und.xyz/webhook/9a9a560b-1ae9-4bcf-a3ce-3aac8b635830',
   
-  // เปิด/ปิดการใช้ CORS Proxy
-  USE_PROXY: true, // เปลี่ยนเป็น false เมื่อแก้ CORS ที่ server แล้ว
+  USE_PROXY: false,
   
-  // เลือก CORS Proxy
   PROXY: CORS_PROXIES.allorigins,
   
-  // สร้าง URL สำหรับ request
   getWebhookURL: function() {
     if (this.USE_PROXY) {
       return this.PROXY + encodeURIComponent(this.N8N_WEBHOOK);
@@ -29,50 +18,67 @@ export const API_CONFIG = {
     return this.N8N_WEBHOOK;
   },
   
-  // Default headers
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   },
   
-  // Timeout setting (milliseconds)
   timeout: 30000,
   
-  // Retry configuration
   retry: {
     maxAttempts: 3,
-    delay: 1000 // ms
+    delay: 1000
   }
 };
 
-/**
- * ฟังก์ชันสำหรับส่ง request พร้อม retry mechanism
- */
 export const sendMessageToWebhook = async (message, sessionId, userId, attempt = 1) => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.timeout);
   
   try {
+    console.log('🚀 Sending message:', { message, sessionId, userId });
+    
     const response = await fetch(API_CONFIG.getWebhookURL(), {
       method: 'POST',
       headers: API_CONFIG.headers,
-      body: JSON.stringify({ message, sessionId, userId }),
+      body: JSON.stringify({ 
+        message: message,
+        sessionId: sessionId,
+        userId: userId 
+      }),
       signal: controller.signal
     });
     
     clearTimeout(timeoutId);
     
+    console.log('📡 Response status:', response.status);
+    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
-    return await response.json();
+    const responseText = await response.text();
+    console.log('📄 Response text:', responseText);
+    
+    if (!responseText || responseText.trim() === '') {
+      throw new Error('Empty response from server');
+    }
+    
+    try {
+      const data = JSON.parse(responseText);
+      console.log('✅ Parsed data:', data);
+      return data;
+    } catch (parseError) {
+      console.error('❌ JSON parse error:', parseError);
+      return { output: responseText };
+    }
     
   } catch (error) {
     clearTimeout(timeoutId);
+    console.error(`❌ Attempt ${attempt} failed:`, error);
     
-    // Retry logic
     if (attempt < API_CONFIG.retry.maxAttempts) {
-      console.log(`Attempt ${attempt} failed, retrying...`);
+      console.log(`🔄 Retrying in ${API_CONFIG.retry.delay * attempt}ms...`);
       await new Promise(resolve => setTimeout(resolve, API_CONFIG.retry.delay * attempt));
       return sendMessageToWebhook(message, sessionId, userId, attempt + 1);
     }
@@ -81,37 +87,62 @@ export const sendMessageToWebhook = async (message, sessionId, userId, attempt =
   }
 };
 
-/**
- * ฟังก์ชันแปลง response เป็นข้อความ
- */
 export const parseWebhookResponse = (data) => {
-  if (data.output) {
-    return data.output;
-  } else if (Array.isArray(data) && data[0]?.output) {
-    return data[0].output;
-  } else if (data.message) {
-    return data.message;
-  } else if (data.response) {
-    return data.response;
-  } else if (typeof data === 'string') {
+  console.log('🔍 Parsing webhook response:', data);
+  
+  if (typeof data === 'string') {
     return data;
   }
-  return 'ขอโทษ, ไม่สามารถประมวลผลได้';
+  
+  if (data.output) {
+    return data.output;
+  } 
+  
+  if (data.message) {
+    return data.message;
+  } 
+  
+  if (data.response) {
+    return data.response;
+  }
+  
+  if (data.text) {
+    return data.text;
+  }
+  
+  if (data.result) {
+    return data.result;
+  }
+  
+  if (Array.isArray(data)) {
+    if (data.length > 0) {
+      const firstItem = data[0];
+      if (firstItem.output) return firstItem.output;
+      if (firstItem.message) return firstItem.message;
+      if (firstItem.response) return firstItem.response;
+      if (firstItem.text) return firstItem.text;
+    }
+  }
+  
+  try {
+    return JSON.stringify(data);
+  } catch (e) {
+    return 'ขอโทษ, ไม่สามารถประมวลผลได้';
+  }
 };
 
-/**
- * ฟังก์ชันสร้าง error message ที่เป็นมิตร
- */
 export const getErrorMessage = (error) => {
+  console.error('💥 Error details:', error);
+  
   if (error.name === 'AbortError') {
     return 'การเชื่อมต่อใช้เวลานานเกินไป กรุณาลองใหม่อีกครั้ง';
   }
   
-  if (error.message.includes('CORS')) {
+  if (error.message.includes('CORS') || error.message.includes('cors')) {
     return 'ไม่สามารถเชื่อมต่อได้เนื่องจาก CORS policy กรุณาตรวจสอบการตั้งค่า webhook';
   }
   
-  if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+  if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError') || error.message.includes('Network request failed')) {
     return 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต';
   }
   
@@ -123,7 +154,15 @@ export const getErrorMessage = (error) => {
     return 'ไม่พบ endpoint ที่ระบุ กรุณาตรวจสอบ URL';
   }
   
-  return 'เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง';
+  if (error.message.includes('Empty response')) {
+    return 'เซิร์ฟเวอร์ส่งข้อมูลกลับมาว่างเปล่า กรุณาตรวจสอบการตั้งค่า webhook';
+  }
+  
+  if (error.message.includes('JSON')) {
+    return 'เกิดข้อผิดพลาดในการอ่านข้อมูลจากเซิร์ฟเวอร์ กรุณาลองใหม่อีกครั้ง';
+  }
+  
+  return `เกิดข้อผิดพลาดในการเชื่อมต่อ: ${error.message}`;
 };
 
 export default API_CONFIG;

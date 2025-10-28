@@ -4,7 +4,6 @@ export default function InfoPanel({ onClose }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // เพิ่ม delay เล็กน้อยเพื่อให้ animation ทำงาน
     setTimeout(() => setIsVisible(true), 10);
   }, []);
 

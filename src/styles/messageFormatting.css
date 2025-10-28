@@ -1,0 +1,492 @@
+.message {
+  display: inline-block;
+  max-width: 70%;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+  border-radius: 12px;
+  line-height: 1.7;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  font-size: 0.95rem;
+}
+
+.chat-user {
+  align-self: flex-end;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  color: #1a1a1a;
+  margin-left: auto;
+  text-align: left;
+}
+
+.chat-ai {
+  align-self: flex-start;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  color: #1a1a1a;
+  margin-right: auto;
+}
+
+/* ==========================================
+   Text Formatting Elements
+   ========================================== */
+
+/* Line & Spacing */
+.msg-line {
+  margin-bottom: 0.25em;
+  line-height: 1.7;
+}
+
+.msg-spacing {
+  height: 0.4em;
+}
+
+/* Headers */
+.msg-h1 {
+  font-size: 1.35em;
+  font-weight: 700;
+  color: #D3756B;
+  margin: 0.9em 0 0.5em;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid rgba(211, 117, 107, 0.2);
+  line-height: 1.4;
+}
+
+.msg-h2 {
+  font-size: 1.18em;
+  font-weight: 600;
+  color: #D3756B;
+  margin: 0.8em 0 0.45em;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid rgba(211, 117, 107, 0.15);
+  line-height: 1.4;
+}
+
+.msg-h3 {
+  font-size: 1.08em;
+  font-weight: 600;
+  color: #D3756B;
+  margin: 0.7em 0 0.35em;
+  line-height: 1.4;
+}
+
+/* Bold & Italic */
+.msg-bold {
+  font-weight: 700;
+  color: #2c2c2c;
+}
+
+.msg-italic {
+  font-style: italic;
+  color: #444;
+}
+
+/* Code */
+.msg-code {
+  background: rgba(211, 117, 107, 0.08);
+  color: #D3756B;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-family: 'Courier New', 'Monaco', monospace;
+  font-size: 0.9em;
+  font-weight: 500;
+  border: 1px solid rgba(211, 117, 107, 0.15);
+}
+
+.msg-pre {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 1em;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0.8em 0;
+  border-left: 3px solid #D3756B;
+}
+
+.msg-pre code {
+  font-family: 'Courier New', 'Monaco', monospace;
+  font-size: 0.85em;
+  line-height: 1.5;
+  color: #2c2c2c;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Links */
+.msg-link {
+  color: #D3756B;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.msg-link:hover {
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+/* Lists */
+.msg-bullet {
+  margin-left: 1.3em;
+  text-indent: -1.3em;
+  margin-bottom: 0.4em;
+  padding-left: 0.25em;
+  line-height: 1.7;
+}
+
+.msg-numbered {
+  margin-left: 1.6em;
+  text-indent: -1.6em;
+  margin-bottom: 0.4em;
+  padding-left: 0.25em;
+  line-height: 1.7;
+}
+
+/* Blockquote */
+.msg-quote {
+  border-left: 4px solid #D3756B;
+  padding-left: 1em;
+  margin: 0.8em 0;
+  color: #666;
+  font-style: italic;
+  background: rgba(211, 117, 107, 0.03);
+  padding: 0.6em 0.6em 0.6em 1em;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Horizontal Line */
+.msg-hr {
+  border: none;
+  border-top: 2px solid rgba(211, 117, 107, 0.2);
+  margin: 1.2em 0;
+}
+
+/* Strikethrough */
+.msg-del {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* ==========================================
+   KMUTNB Specific Highlights
+   ========================================== */
+
+.highlight-faculty,
+.highlight-major,
+.highlight-program {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(211, 117, 107, 0.12), rgba(255, 255, 255, 0.3));
+  padding: 3px 9px;
+  margin: 2px 4px 2px 0;
+  border-radius: 7px;
+  font-weight: 600;
+  color: #b94a3d;
+  border: 1px solid rgba(211, 117, 107, 0.28);
+  box-shadow: 0 1px 3px rgba(211, 117, 107, 0.12);
+  line-height: 1.9;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+}
+
+.highlight-faculty:hover,
+.highlight-major:hover,
+.highlight-program:hover {
+  background: linear-gradient(135deg, rgba(211, 117, 107, 0.22), rgba(255, 255, 255, 0.4));
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(211, 117, 107, 0.2);
+}
+
+.highlight-number {
+  width: 100px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.12), rgba(255, 255, 255, 0.35));
+  color: #1565c0;
+  padding: 3px 10px;
+  margin: 0 5px 0 4px;
+  border-radius: 7px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border: 1.5px solid rgba(33, 150, 243, 0.35);
+  box-shadow: 0 1px 3px rgba(33, 150, 243, 0.18);
+  white-space: nowrap;
+  line-height: 1.9;
+  vertical-align: middle;
+  transition: all 0.25s ease;
+}
+
+.highlight-number .number-value {
+  font-weight: 700;
+  margin-right: 15px;
+}
+
+.highlight-number .number-unit {
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.highlight-number:hover {
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.2), rgba(255, 255, 255, 0.45));
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(33, 150, 243, 0.28);
+}
+
+.highlight-money {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(255, 255, 255, 0.3));
+  color: #1b5e20;
+  padding: 3px 9px;
+  margin: 2px 3px 2px 0;
+  border-radius: 7px;
+  font-weight: 600;
+  border: 1px solid rgba(76, 175, 80, 0.28);
+  box-shadow: 0 1px 2px rgba(76, 175, 80, 0.15);
+  line-height: 1.9;
+  vertical-align: middle;
+  transition: all 0.25s ease;
+}
+
+.highlight-money:hover {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.18), rgba(255, 255, 255, 0.4));
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.25);
+}
+
+.highlight-date {
+  display: inline-block;
+  color: #6a1b9a;
+  font-weight: 600;
+  padding: 3px 9px;
+  margin: 2px 3px 2px 0;
+  border-radius: 7px;
+  background: linear-gradient(135deg, rgba(142, 36, 170, 0.08), rgba(255, 255, 255, 0.3));
+  border: 1px solid rgba(142, 36, 170, 0.2);
+  box-shadow: 0 1px 2px rgba(142, 36, 170, 0.12);
+  line-height: 1.9;
+  vertical-align: middle;
+  transition: all 0.25s ease;
+}
+
+.highlight-date:hover {
+  background: linear-gradient(135deg, rgba(142, 36, 170, 0.15), rgba(255, 255, 255, 0.4));
+  transform: translateY(-1px);
+}
+
+.highlight-phone,
+.highlight-email {
+  display: inline-block;
+  color: #D3756B;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 3px 9px;
+  margin: 2px 3px 2px 0;
+  border-radius: 7px;
+  background: linear-gradient(135deg, rgba(211, 117, 107, 0.1), rgba(255, 255, 255, 0.3));
+  border: 1px solid rgba(211, 117, 107, 0.25);
+  line-height: 1.9;
+  vertical-align: middle;
+  transition: all 0.25s ease;
+}
+
+.highlight-phone:hover,
+.highlight-email:hover {
+  background: linear-gradient(135deg, rgba(211, 117, 107, 0.18), rgba(255, 255, 255, 0.4));
+  transform: translateY(-1px);
+  box-shadow: 0 1px 3px rgba(211, 117, 107, 0.2);
+}
+
+
+/* ==========================================
+   Scrollbar for Code Blocks
+   ========================================== */
+
+.msg-pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.msg-pre::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.msg-pre::-webkit-scrollbar-thumb {
+  background: rgba(211, 117, 107, 0.3);
+  border-radius: 4px;
+}
+
+.msg-pre::-webkit-scrollbar-thumb:hover {
+  background: rgba(211, 117, 107, 0.5);
+}
+
+/* ==========================================
+   Animation
+   ========================================== */
+
+.fade-in {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Typing Indicator */
+.typing-indicator {
+  display: flex;
+  gap: 8px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background: #D3756B;
+  border-radius: 50%;
+  animation: typingAnimation 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingAnimation {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  30% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+/* Empty message fix */
+.message:empty {
+  display: none !important;
+}
+
+/* ==========================================
+   Responsive Design
+   ========================================== */
+
+@media screen and (max-width: 768px) {
+  .message {
+    max-width: 80%;
+    font-size: 0.9rem;
+    padding: 0.8rem 1rem;
+    line-height: 1.6;
+  }
+  
+  .msg-h1 { font-size: 1.25em; }
+  .msg-h2 { font-size: 1.15em; }
+  .msg-h3 { font-size: 1.05em; }
+  
+  .msg-code {
+    font-size: 0.85em;
+    padding: 2px 6px;
+  }
+  
+  .msg-pre {
+    font-size: 0.8em;
+    padding: 0.8em;
+    margin: 0.6em 0;
+  }
+  
+  .msg-bullet,
+  .msg-numbered {
+    margin-left: 1.2em;
+    text-indent: -1.2em;
+    font-size: 0.95em;
+  }
+  
+  .highlight-faculty,
+  .highlight-major,
+  .highlight-program,
+  .highlight-money,
+  .highlight-number {
+    font-size: 0.88em;
+    padding: 2px 7px;
+    margin: 1px 2px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .message {
+    font-size: 0.85rem;
+    padding: 0.7rem 0.8rem;
+    max-width: 85%;
+  }
+  
+  .msg-h1 { font-size: 1.15em; }
+  .msg-h2 { font-size: 1.1em; }
+  .msg-h3 { font-size: 1.05em; }
+  
+  .msg-pre {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .msg-bullet,
+  .msg-numbered {
+    margin-left: 1em;
+    text-indent: -1em;
+  }
+  
+  .highlight-faculty,
+  .highlight-major,
+  .highlight-program,
+  .highlight-money,
+  .highlight-number {
+    font-size: 0.85em;
+    padding: 2px 6px;
+  }
+}
+
+/* Landscape mode */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .message {
+    max-width: 75%;
+  }
+  
+  .msg-pre {
+    max-height: 150px;
+    overflow-y: auto;
+  }
+}
+
+/* ==========================================
+   Print Styles
+   ========================================== */
+
+@media print {
+  .message {
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .msg-link {
+    color: #000;
+    text-decoration: underline;
+  }
+  
+  .highlight-phone::after {
+    content: " (" attr(href) ")";
+  }
+}

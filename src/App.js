@@ -10,6 +10,7 @@ import { getCurrentSessionId, loadChatHistory } from "./scripts/session";
 import { initSessionManagement, handleNewChatButton } from "./scripts/popup";
 import "./styles/style.css";
 import "./styles/session.css";
+import "./styles/messageFormatting.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export default function App() {
