@@ -175,16 +175,16 @@ body {
 
             .chat-user {
                 align-self: flex-end;
-                background-color: rgba(0, 0, 0, 0.1);
+                background-color: #D3756B;
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
-                color: #1a1a1a;
+                color: #eee;
                 margin-left: auto;
             }
 
             .chat-ai {
                 align-self: flex-start;
-                background-color: rgba(255, 255, 255, 0.2);
+                background-color: #ECE2E1;
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
                 color: #1a1a1a;
@@ -195,18 +195,18 @@ body {
                 display: flex;
                 gap: 8px;
                 padding: 1rem;
-                
+
                 .typing-dot {
                     width: 8px;
                     height: 8px;
                     background: #D3756B;
                     border-radius: 50%;
                     animation: typingAnimation 1.4s infinite;
-                    
+
                     &:nth-child(2) {
                         animation-delay: 0.2s;
                     }
-                    
+
                     &:nth-child(3) {
                         animation-delay: 0.4s;
                     }
@@ -294,17 +294,6 @@ body {
                 }
             }
         }
-    }
-}
-
-@keyframes typingAnimation {
-    0%, 60%, 100% {
-        transform: translateY(0);
-        opacity: 0.7;
-    }
-    30% {
-        transform: translateY(-10px);
-        opacity: 1;
     }
 }
 
@@ -784,4 +773,3 @@ body {
 .history-popup::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, rgba(211, 117, 107, 0.6) 0%, rgba(211, 117, 107, 0.4) 100%);
 }
-

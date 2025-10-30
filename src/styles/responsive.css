@@ -97,7 +97,7 @@
 
             .menu-items {
                 position: fixed;
-                top: 400px;
+                top: 450px;
                 left: 50%;
                 transform: translate(-50%, -50%) scale(0.9);
                 width: 88%;
@@ -634,7 +634,7 @@
 }
 
 /* ===== SMALL MOBILE BREAKPOINT ===== */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 540px) {
     .container {
         .navbar {
             width: calc(100% - 10px) !important;
@@ -665,6 +665,7 @@
                 max-height: 70vh;
                 padding: 25px 18px;
                 border-radius: 20px;
+                top: 350px;
 
                 li a {
                     font-size: 1rem;
@@ -846,10 +847,11 @@
 }
 
 /* ===== VERY SMALL SCREENS ===== */
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 375px) {
     .container {
         .navbar .menu-items {
             width: 95%;
+            top: 350px;
         }
 
         .chat-window .window .chat-placeholder {

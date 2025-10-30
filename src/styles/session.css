@@ -270,6 +270,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -280,6 +281,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -287,18 +289,24 @@
 }
 
 @keyframes pulseWarning {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
   }
+
   50% {
     box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
   }
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
@@ -311,24 +319,97 @@
     gap: 8px;
     align-items: flex-start;
   }
-  
+
   .session-counter-badge {
     align-self: flex-end;
   }
-  
+
   .session-limit-content,
   .confirm-content {
     margin: 1rem;
     padding: 2rem 1.5rem;
   }
-  
+
   .session-limit-buttons,
   .confirm-buttons {
     flex-direction: column;
   }
-  
+
   .session-limit-buttons button,
   .confirm-buttons button {
     width: 100%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .session-counter {
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    border-radius: 13px;
+  }
+
+  .session-counter-text {
+    font-size: 0.95rem;
+    gap: 9px;
+  }
+
+  .session-counter-badge {
+    font-size: 0.9rem;
+    padding: 5px 12px;
+    border-radius: 9px;
+  }
+
+  .session-warning {
+    gap: 7px;
+    padding: 7px 13px;
+    font-size: 0.9rem;
+    margin-left: 10px;
+  }
+
+  .session-limit-content,
+  .confirm-content {
+    padding: 2.8rem 2.2rem;
+    max-width: 500px;
+    border-radius: 22px;
+  }
+
+  .session-limit-icon {
+    width: 85px;
+    height: 85px;
+    margin-bottom: 1.7rem;
+  }
+
+  .session-limit-icon i {
+    font-size: 2.7rem;
+  }
+
+  .session-limit-content h3,
+  .confirm-content h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .session-limit-content p,
+  .confirm-content p {
+    font-size: 1.05rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .session-limit-hint {
+    margin-bottom: 2.2rem !important;
+  }
+
+  .session-limit-buttons,
+  .confirm-buttons {
+    gap: 1.2rem;
+    margin-top: 1.7rem;
+  }
+
+  .session-limit-buttons button,
+  .confirm-buttons button {
+    padding: 1rem 2rem;
+    font-size: 1.05rem;
+    border-radius: 11px;
+    gap: 0.6rem;
   }
 }
