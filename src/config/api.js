@@ -4,19 +4,36 @@ const CORS_PROXIES = {
   thingproxy: 'https://thingproxy.freeboard.io/fetch/'
 };
 
+const WEBHOOK_MODES = {
+  admission: 'https://n8n.r0und.xyz/webhook/9a9a560b-1ae9-4bcf-a3ce-3aac8b635830',
+  campus: 'https://n8n.r0und.xyz/webhook/YOUR_CAMPUS_WEBHOOK_ID'
+};
+
 export const API_CONFIG = {
-  N8N_WEBHOOK: 'https://n8n.r0und.xyz/webhook/9a9a560b-1ae9-4bcf-a3ce-3aac8b635830',
+  getCurrentMode: function() {
+    return localStorage.getItem('chatMode') || 'admission';
+  },
   
-  USE_PROXY: false,
-  
-  PROXY: CORS_PROXIES.allorigins,
+  setCurrentMode: function(mode) {
+    if (WEBHOOK_MODES[mode]) {
+      localStorage.setItem('chatMode', mode);
+      return true;
+    }
+    return false;
+  },
   
   getWebhookURL: function() {
+    const currentMode = this.getCurrentMode();
+    const webhookURL = WEBHOOK_MODES[currentMode];
+    
     if (this.USE_PROXY) {
-      return this.PROXY + encodeURIComponent(this.N8N_WEBHOOK);
+      return this.PROXY + encodeURIComponent(webhookURL);
     }
-    return this.N8N_WEBHOOK;
+    return webhookURL;
   },
+  
+  USE_PROXY: false,
+  PROXY: CORS_PROXIES.allorigins,
   
   headers: {
     'Content-Type': 'application/json',
@@ -28,6 +45,23 @@ export const API_CONFIG = {
   retry: {
     maxAttempts: 3,
     delay: 1000
+  },
+  
+  MODES: {
+    admission: {
+      id: 'admission',
+      name: 'การรับสมัคร',
+      icon: 'fa-graduation-cap',
+      description: 'ข้อมูลการสมัครเข้าเรียน คุณสมบัติ และการสอบเข้า',
+      color: '#D3756B'
+    },
+    campus: {
+      id: 'campus',
+      name: 'ชีวิตในมหาวิทยาลัย',
+      icon: 'fa-building-columns',
+      description: 'หอพัก สิ่งอำนวยความสะดวก และกิจกรรมต่างๆ',
+      color: '#6BA8D3'
+    }
   }
 };
 
@@ -36,7 +70,8 @@ export const sendMessageToWebhook = async (message, sessionId, userId, attempt =
   const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.timeout);
   
   try {
-    console.log('🚀 Sending message:', { message, sessionId, userId });
+    const currentMode = API_CONFIG.getCurrentMode();
+    console.log('🚀 Sending message:', { message, sessionId, userId, mode: currentMode });
     
     const response = await fetch(API_CONFIG.getWebhookURL(), {
       method: 'POST',
@@ -44,7 +79,8 @@ export const sendMessageToWebhook = async (message, sessionId, userId, attempt =
       body: JSON.stringify({ 
         message: message,
         sessionId: sessionId,
-        userId: userId 
+        userId: userId,
+        mode: currentMode
       }),
       signal: controller.signal
     });

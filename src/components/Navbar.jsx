@@ -1,7 +1,13 @@
 import React from "react";
 import logo from "../assets/images/logo_kmutnb.png";
+import ModeSwitcher from "./ModeSwitcher";
 
-export default function Navbar({ toggleMenu, openPopup, menuOpen }) {
+export default function Navbar({
+  toggleMenu,
+  openPopup,
+  menuOpen,
+  onModeChange,
+}) {
   const handleMenuClick = (popupName) => (e) => {
     e.preventDefault();
     openPopup(popupName);
@@ -52,6 +58,9 @@ export default function Navbar({ toggleMenu, openPopup, menuOpen }) {
             <i className="fa-solid fa-headphones"></i>
             <span>ติดต่อเจ้าหน้าที่</span>
           </a>
+        </li>
+        <li className="mobile-only mode-switcher-menu">
+          <ModeSwitcher onModeChange={onModeChange} />
         </li>
       </ul>
     </div>

@@ -84,7 +84,7 @@ body {
         }
 
         ul {
-            width: 70%;
+            width: 80%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -104,7 +104,7 @@ body {
                     text-decoration: none;
                     color: #1a1a1a;
                     font-weight: 500;
-                    font-size: 1rem;
+                    font-size: 0.9rem;
                     transition: all .5s ease;
                     animation: fadeInUp 1.5s ease-out;
 
@@ -118,6 +118,11 @@ body {
                         color: #D3756B;
                     }
                 }
+
+            }
+            
+            .mode-switcher-menu {
+                width: 150px;
             }
         }
     }
@@ -221,8 +226,6 @@ body {
                 left: 50%;
                 transform: translate(-50%, -50%);
                 color: #1a1a1a;
-                font-size: 3rem;
-                font-weight: bold;
                 opacity: 1;
                 transition: opacity 0.5s ease;
                 text-align: center;
@@ -233,11 +236,32 @@ body {
                     font-size: 14px;
                 }
 
-                .logo {
+                .placeholder-logo {
                     width: 120px;
                     height: 120px;
                     border-radius: 50%;
                 }
+
+                .placeholder-title {
+                    text-align: center;
+                    line-height: 1.2;
+                }
+
+                .title-main {
+                    display: block;
+                    font-size: 3rem;
+                    font-weight: 700;
+                }
+
+                .title-sub {
+                    display: block;
+                    font-size: 2rem;
+                    font-weight: 600;
+                    margin-top: 0.3rem;
+                    opacity: 0.9;
+                }
+                
+
             }
 
             .chat-placeholder.fade-out {
@@ -773,3 +797,78 @@ body {
 .history-popup::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, rgba(211, 117, 107, 0.6) 0%, rgba(211, 117, 107, 0.4) 100%);
 }
+
+/* =========================
+   LOGO RESPONSIVE
+   ========================= */
+.logo-responsive {
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-responsive img {
+    width: 36px;
+}
+
+.logo-responsive span {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.navbar {
+    padding: 0 1rem;
+}
+
+.navbar ul li a {
+    font-size: 0.95rem;
+}
+
+.navbar ul li i {
+    font-size: 1.15rem;
+}
+
+@media (max-width: 1024px) {
+    .logo-responsive {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .menu-items {
+        position: fixed;
+        top: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 360px;
+
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 1.2rem;
+
+        flex-direction: column;
+        gap: 14px;
+
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+
+    .menu-items.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .desktop-only {
+        display: none;
+    }
+}
+
+

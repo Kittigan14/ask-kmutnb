@@ -256,6 +256,11 @@
                         }
                     }
                 }
+
+                .mode-switcher-menu {
+                    width: 100%;
+                    margin-left: 50px;
+                }
             }
         }
 
@@ -782,7 +787,6 @@
     }
 }
 
-/* ===== LANDSCAPE MODE ===== */
 @media screen and (max-width: 768px) and (orientation: landscape) {
     .container {
         .navbar {
@@ -846,7 +850,6 @@
     }
 }
 
-/* ===== VERY SMALL SCREENS ===== */
 @media screen and (max-width: 375px) {
     .container {
         .navbar .menu-items {
@@ -866,7 +869,6 @@
     }
 }
 
-/* ===== TOUCH DEVICE OPTIMIZATIONS ===== */
 @media (hover: none) and (pointer: coarse) {
     * {
         -webkit-tap-highlight-color: transparent;
@@ -879,7 +881,6 @@
     }
 }
 
-/* ===== SMOOTH SCROLLING ===== */
 @media screen and (max-width: 768px) {
     .window,
     .menu-items {
