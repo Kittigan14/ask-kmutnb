@@ -6,7 +6,7 @@ const CORS_PROXIES = {
 
 const WEBHOOK_MODES = {
   admission: 'https://n8n.r0und.xyz/webhook/9a9a560b-1ae9-4bcf-a3ce-3aac8b635830',
-  campus: 'https://n8n.r0und.xyz/webhook/YOUR_CAMPUS_WEBHOOK_ID'
+  campus: 'https://n8n.r0und.xyz/webhook/campus'
 };
 
 export const API_CONFIG = {
