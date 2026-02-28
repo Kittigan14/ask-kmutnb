@@ -1,0 +1,157 @@
+/* ─── Suggested Questions ─────────────────────────────── */
+.suggested-questions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 4px;
+  pointer-events: all;
+}
+
+/* Category card */
+.sq-category {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.sq-category.open {
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 8px 24px rgba(211, 117, 107, 0.15);
+}
+
+/* Header button */
+.sq-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.25s ease;
+}
+
+.sq-header:hover {
+  background: rgba(211, 117, 107, 0.08);
+}
+
+.sq-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sq-header-left .fas {
+  font-size: 1rem;
+  color: #D3756B;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(211, 117, 107, 0.12);
+  border-radius: 10px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.sq-category.open .sq-header-left .fas {
+  background: linear-gradient(135deg, #D3756B 0%, #c96158 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(211, 117, 107, 0.35);
+}
+
+.sq-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* Chevron animation */
+.sq-chevron {
+  font-size: 0.75rem;
+  color: #888;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.sq-category.open .sq-chevron {
+  transform: rotate(180deg);
+  color: #D3756B;
+}
+
+/* Dropdown body — CSS-only accordion using max-height */
+.sq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Each question is ~44px tall; give generous upper bound */
+.sq-category.open .sq-body {
+  max-height: calc(var(--count, 12) * 52px + 16px);
+}
+
+.sq-list {
+  list-style: none;
+  padding: 4px 10px 10px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Individual question button */
+.sq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: "Kanit", sans-serif;
+  font-size: 0.85rem;
+  color: #2c2c2c;
+  transition: background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+}
+
+.sq-question:hover {
+  background: rgba(211, 117, 107, 0.1);
+  color: #D3756B;
+  padding-left: 16px;
+}
+
+.sq-question:active {
+  transform: scale(0.98);
+}
+
+.sq-num {
+  min-width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(211, 117, 107, 0.12);
+  color: #D3756B;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sq-question:hover .sq-num {
+  background: #D3756B;
+  color: #fff;
+}

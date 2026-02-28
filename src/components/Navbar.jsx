@@ -1,12 +1,12 @@
 import React from "react";
 import logo from "../assets/images/logo_kmutnb.png";
-import ModeSwitcher from "./ModeSwitcher";
 
 export default function Navbar({
   toggleMenu,
   openPopup,
   menuOpen,
-  onModeChange,
+  isDarkMode,
+  toggleDarkMode
 }) {
   const handleMenuClick = (popupName) => (e) => {
     e.preventDefault();
@@ -22,11 +22,15 @@ export default function Navbar({
     <div className="navbar liquid-glass">
       <div className="nav-title">
         <img src={logo} width="48" alt="KMUTNB Logo" />
-        <span>ASK KMUTNB</span>
+        <span className="desktop-only">ASK KMUTNB</span>
       </div>
 
-      <div className="menu-toggle" onClick={handleToggleMenu}>
-        <i className="fa-solid fa-bars"></i>
+      <div className="nav-actions">
+    
+
+        <div className="menu-toggle" onClick={handleToggleMenu}>
+          <i className="fa-solid fa-bars"></i>
+        </div>
       </div>
 
       <ul className={`menu-items ${menuOpen ? "active" : ""}`}>
@@ -58,9 +62,6 @@ export default function Navbar({
             <i className="fa-solid fa-headphones"></i>
             <span>ติดต่อเจ้าหน้าที่</span>
           </a>
-        </li>
-        <li className="mobile-only mode-switcher-menu">
-          <ModeSwitcher onModeChange={onModeChange} />
         </li>
       </ul>
     </div>

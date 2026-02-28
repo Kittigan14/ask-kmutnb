@@ -1,9 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import logo from "../assets/images/logo_kmutnb.png";
 import { formatKMUTNBMessage } from "../utils/TextFormatter";
-import { API_CONFIG } from "../config/api";
+import SuggestedQuestions from "./SuggestedQuestions";
+import "../styles/suggestedQuestions.css";
 
-export default function ChatWindow({ messages, isTyping }) {
+export default function ChatWindow({ messages, isTyping, onSelectQuestion }) {
   const chatWindowRef = useRef(null);
 
   useEffect(() => {
@@ -12,70 +13,38 @@ export default function ChatWindow({ messages, isTyping }) {
     }
   }, [messages, isTyping]);
 
-  const currentMode = API_CONFIG.getCurrentMode();
-
-  const getPlaceholderContent = () => {
-    if (currentMode === "admission") {
-      return {
-        title: {
-          main: "ASK KMUTNB",
-          sub: "การรับสมัคร",
-        },
-        description: "แชทบอทผู้ช่วยตอบทุกคำถามเกี่ยวกับการเข้าศึกษาที่ มจพ.",
-        examples:
-          "📝 การเตรียมตัวสอบ | 🧪 ข้อมูลการสอบเข้า | 🎤 การสอบสัมภาษณ์ | 📚 คณะที่เปิดสอน<br />รวมถึงรายละเอียดทุนเรียนดี และคุณสมบัติผู้สมัคร",
-      };
-    } else {
-      return {
-        title: {
-          main: "ASK KMUTNB",
-          sub: "ชีวิตในมหาวิทยาลัย",
-        },
-        description: "แชทบอทผู้ช่วยตอบทุกคำถามเกี่ยวกับชีวิตในรั้วมหาวิทยาลัย",
-        examples:
-          "🏢 หอพักและที่พัก | 🍽️ โรงอาหารและร้านค้า | 🚌 การเดินทาง | 🏋️ สิ่งอำนวยความสะดวก<br />รวมถึงกิจกรรม ชมรม และชีวิตนิสิต",
-      };
-    }
-  };
-
-  const placeholder = getPlaceholderContent();
+  const isEmpty = messages.length === 0 && !isTyping;
 
   return (
     <div className="window liquid-glass" id="chatWindow" ref={chatWindowRef}>
-      {messages.length === 0 && !isTyping && (
+      {isEmpty && (
         <div className="chat-placeholder">
           <div className="placeholder-icon">
             <img src={logo} alt="KMUTNB Logo" className="placeholder-logo" />
           </div>
 
           <h1 className="placeholder-title">
-            <span className="title-main">{placeholder.title.main}</span>
-            <span className="title-sub">{placeholder.title.sub}</span>
+            <span className="title-main">ASK KMUTNB</span>
+            <span className="title-sub">ผู้ช่วยตอบคำถาม มจพ.</span>
           </h1>
 
           <p style={{ marginTop: "0.2rem", fontWeight: 500 }}>
-            {placeholder.description}
+            แชทบอทผู้ช่วยตอบทุกคำถามเกี่ยวกับมหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ
           </p>
 
-          <p
-            style={{ marginTop: "1rem", fontWeight: 400 }}
-            dangerouslySetInnerHTML={{
-              __html: `<b>สอบถามได้ทุกเรื่อง เช่น</b><br />${placeholder.examples}`,
-            }}
-          />
-
-          <p style={{ marginTop: "1.5rem", fontStyle: "italic", opacity: 0.8 }}>
-            เริ่มต้นพิมพ์คำถามของคุณได้เลย...
+          <p style={{ marginTop: "0.6rem", marginBottom: "7px", fontWeight: 500, fontSize: "0.9rem", opacity: 0.75 }}>
+            หรือเลือกคำถามที่สนใจได้เลย 👇
           </p>
+
+          <SuggestedQuestions onSelectQuestion={onSelectQuestion} />
         </div>
       )}
 
       {messages.map((msg, idx) => (
         <div
           key={idx}
-          className={`message ${
-            msg.sender === "user" ? "chat-user" : "chat-ai"
-          } fade-in`}
+          className={`message ${msg.sender === "user" ? "chat-user" : "chat-ai"
+            } fade-in`}
         >
           {msg.sender === "user" ? (
             <span>{msg.text}</span>

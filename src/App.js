@@ -5,14 +5,13 @@ import ChatInput from "./components/ChatInput";
 import HistoryPopup from "./components/HistoryPopup";
 import InfoPanel from "./components/InfoPanel";
 import ContactPopup from "./components/ContactPopup";
-import ModeSwitcher from "./components/ModeSwitcher";
 import Overlay from "./components/Overlay";
 import { getCurrentSessionId, loadChatHistory } from "./scripts/session";
 import { initSessionManagement, handleNewChatButton } from "./scripts/popup";
 import "./styles/style.css";
 import "./styles/session.css";
 import "./styles/messageFormatting.css";
-import "./styles/modeSwitcher.css";
+import "./styles/darkmode.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export default function App() {
@@ -20,7 +19,30 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
-  const [currentMode, setCurrentMode] = useState('admission');
+  const [pendingQuestion, setPendingQuestion] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('darkMode') === 'true';
+  });
+
+  const handleSelectQuestion = (question) => {
+    setPendingQuestion(question);
+  };
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prev => {
+      const newVal = !prev;
+      localStorage.setItem('darkMode', newVal);
+      return newVal;
+    });
+  };
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
   useEffect(() => {
     const sessionId = getCurrentSessionId();
@@ -61,26 +83,10 @@ export default function App() {
 
   const handleSessionChange = (newMessages) => {
     setMessages(newMessages);
-    closeAllPopups(); 
+    closeAllPopups();
   };
 
-  const handleModeChange = (newMode) => {
-    setCurrentMode(newMode);
-    console.log("Mode changed to:", newMode);
-    
-    const modeNames = {
-      admission: 'การรับสมัคร',
-      campus: 'ชีวิตในมหาวิทยาลัย'
-    };
-    
-    const container = document.querySelector('.container');
-    if (container) {
-      container.classList.add('mode-changing');
-      setTimeout(() => {
-        container.classList.remove('mode-changing');
-      }, 600);
-    }
-  };
+
 
   useEffect(() => {
     const handleEscape = (e) => {
@@ -99,41 +105,43 @@ export default function App() {
         toggleMenu={toggleMenu}
         openPopup={openPopup}
         menuOpen={menuOpen}
-        onModeChange={handleModeChange}
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
       />
 
-        {/* Mode Switcher - Mobile only */}
-        {/* <div className="mobile-only">
-          <ModeSwitcher onModeChange={handleModeChange} />
-        </div> */}
       <section className="chat-window">
-        
-        <ChatWindow messages={messages} isTyping={isTyping} currentMode={currentMode} />
-        <ChatInput 
-          messages={messages} 
-          setMessages={setMessages} 
-          setIsTyping={setIsTyping} 
+        <ChatWindow
+          messages={messages}
+          isTyping={isTyping}
+          onSelectQuestion={handleSelectQuestion}
+        />
+        <ChatInput
+          messages={messages}
+          setMessages={setMessages}
+          setIsTyping={setIsTyping}
+          pendingQuestion={pendingQuestion}
+          onPendingQuestionSent={() => setPendingQuestion(null)}
         />
       </section>
 
       {activePopup === "history" && (
-        <HistoryPopup 
-          onClose={closeAllPopups} 
+        <HistoryPopup
+          onClose={closeAllPopups}
           onSessionChange={handleSessionChange}
         />
       )}
-      
+
       {activePopup === "info" && (
         <InfoPanel onClose={closeAllPopups} />
       )}
-      
+
       {activePopup === "contact" && (
         <ContactPopup onClose={closeAllPopups} />
       )}
 
-      <Overlay 
-        visible={!!activePopup || menuOpen} 
-        onClick={closeAllPopups} 
+      <Overlay
+        visible={!!activePopup || menuOpen}
+        onClick={closeAllPopups}
       />
     </div>
   );

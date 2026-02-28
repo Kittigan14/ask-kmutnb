@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   getCurrentSessionId,
   getUserId,
@@ -10,7 +10,13 @@ import {
   getErrorMessage,
 } from "../config/api";
 
-export default function ChatInput({ messages, setMessages, setIsTyping }) {
+export default function ChatInput({
+  messages,
+  setMessages,
+  setIsTyping,
+  pendingQuestion,
+  onPendingQuestionSent,
+}) {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const textareaRef = useRef(null);
@@ -23,37 +29,47 @@ export default function ChatInput({ messages, setMessages, setIsTyping }) {
     }
   }, [input]);
 
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+  const sendMessage = useCallback(
+    async (text) => {
+      if (!text.trim() || isLoading) return;
 
-    const userMessage = input.trim();
+      const newMessages = addMessageToSession(text.trim(), "user");
+      setMessages(newMessages);
+      setIsTyping(true);
+      setIsLoading(true);
 
-    const newMessages = addMessageToSession(userMessage, "user");
-    setMessages(newMessages);
-    setInput("");
-    setIsTyping(true);
-    setIsLoading(true);
+      try {
+        const sessionId = getCurrentSessionId();
+        const userId = getUserId();
 
-    try {
-      const sessionId = getCurrentSessionId();
-      const userId = getUserId();
+        const data = await sendMessageToWebhook(text.trim(), sessionId, userId);
+        const aiResponse = parseWebhookResponse(data);
+        const updatedMessages = addMessageToSession(aiResponse, "ai");
+        setMessages(updatedMessages);
+      } catch (error) {
+        console.error("Error:", error);
+        const errorMessage = getErrorMessage(error);
+        const errorMessages = addMessageToSession(errorMessage, "ai");
+        setMessages(errorMessages);
+      } finally {
+        setIsTyping(false);
+        setIsLoading(false);
+      }
+    },
+    [isLoading, setMessages, setIsTyping]
+  );
 
-      const data = await sendMessageToWebhook(userMessage, sessionId, userId);
-
-      const aiResponse = parseWebhookResponse(data);
-
-      const updatedMessages = addMessageToSession(aiResponse, "ai");
-      setMessages(updatedMessages);
-    } catch (error) {
-      console.error("Error:", error);
-
-      const errorMessage = getErrorMessage(error);
-      const errorMessages = addMessageToSession(errorMessage, "ai");
-      setMessages(errorMessages);
-    } finally {
-      setIsTyping(false);
-      setIsLoading(false);
+  // Auto-send when a suggested question is selected
+  useEffect(() => {
+    if (pendingQuestion) {
+      sendMessage(pendingQuestion);
+      if (onPendingQuestionSent) onPendingQuestionSent();
     }
+  }, [pendingQuestion]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleSend = async () => {
+    await sendMessage(input.trim());
+    setInput("");
   };
 
   const handleKeyPress = (e) => {

@@ -120,7 +120,7 @@ body {
                 }
 
             }
-            
+
             .mode-switcher-menu {
                 width: 150px;
             }
@@ -219,17 +219,14 @@ body {
             }
 
             .chat-placeholder {
-                width: auto;
-                padding: 15px;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
+                width: 100%;
+                padding: 20px 8px 12px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
                 color: #1a1a1a;
-                opacity: 1;
-                transition: opacity 0.5s ease;
                 text-align: center;
-                pointer-events: none;
+                gap: 0;
 
                 p {
                     margin: 0;
@@ -237,8 +234,8 @@ body {
                 }
 
                 .placeholder-logo {
-                    width: 120px;
-                    height: 120px;
+                    width: 90px;
+                    height: 90px;
                     border-radius: 50%;
                 }
 
@@ -249,18 +246,17 @@ body {
 
                 .title-main {
                     display: block;
-                    font-size: 3rem;
+                    font-size: 2.2rem;
                     font-weight: 700;
                 }
 
                 .title-sub {
                     display: block;
-                    font-size: 2rem;
+                    font-size: 1.4rem;
                     font-weight: 600;
-                    margin-top: 0.3rem;
+                    margin-top: 0.2rem;
                     opacity: 0.9;
                 }
-                
 
             }
 
@@ -870,5 +866,3 @@ body {
         display: none;
     }
 }
-
-

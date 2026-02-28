@@ -1,0 +1,297 @@
+/* ═══════════════════════════════════════════════
+   DARK MODE — ASK KMUTNB
+   Applied via: document.documentElement class="dark"
+   ═══════════════════════════════════════════════ */
+
+/* ── Dark mode toggle button (in Navbar) ─────── */
+.dark-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #1a1a1a;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.dark-toggle:hover {
+    background: rgba(211, 117, 107, 0.12);
+    color: #D3756B;
+}
+
+/* ── Base dark variables ─────────────────────── */
+:root {
+    --dm-bg: #0f0f12;
+    --dm-surface: rgba(30, 30, 38, 0.85);
+    --dm-surface-2: rgba(40, 40, 52, 0.9);
+    --dm-border: rgba(255, 255, 255, 0.08);
+    --dm-text: #e8e8f0;
+    --dm-text-muted: #9090a8;
+    --dm-accent: #e08880;
+    --dm-accent-dim: rgba(224, 136, 128, 0.15);
+    --dm-accent-dim2: rgba(224, 136, 128, 0.08);
+    --dm-chat-user: #c96158;
+    --dm-chat-ai: #1e1e28;
+    --dm-glass: rgba(20, 20, 28, 0.75);
+}
+
+/* ── Body & Background grid ──────────────────── */
+.dark body {
+    background: var(--dm-bg);
+    background-image:
+        linear-gradient(-90deg, transparent calc(5em - 1px), rgba(255, 255, 255, 0.04) calc(5em - 1px + 1px), rgba(255, 255, 255, 0.04) 5em),
+        linear-gradient(0deg, transparent calc(5em - 1px), rgba(255, 255, 255, 0.04) calc(5em - 1px + 1px), rgba(255, 255, 255, 0.04) 5em);
+    background-size: 5em 5em;
+}
+
+/* ── Navbar ──────────────────────────────────── */
+.dark .navbar {
+    background: rgba(15, 15, 20, 0.6) !important;
+    border-color: var(--dm-border) !important;
+}
+
+.dark .navbar .nav-title span,
+.dark .navbar ul li a,
+.dark .navbar .menu-toggle i {
+    color: var(--dm-text) !important;
+}
+
+.dark .navbar ul li a:hover {
+    color: var(--dm-accent) !important;
+}
+
+.dark .dark-toggle {
+    color: var(--dm-text);
+}
+
+.dark .dark-toggle:hover {
+    background: var(--dm-accent-dim);
+    color: var(--dm-accent);
+}
+
+/* ── Mobile menu ──────────────────────────────── */
+.dark .menu-items {
+    background: rgba(18, 18, 26, 0.97) !important;
+    border: 1px solid var(--dm-border);
+}
+
+/* ── Chat window glass panel ─────────────────── */
+.dark .window {
+    background: var(--dm-glass) !important;
+    border-color: var(--dm-border) !important;
+}
+
+/* ── Chat messages ───────────────────────────── */
+.dark .chat-user {
+    background-color: var(--dm-chat-user) !important;
+    color: #fff !important;
+}
+
+.dark .chat-ai {
+    background-color: var(--dm-chat-ai) !important;
+    color: var(--dm-text) !important;
+}
+
+/* ── Placeholder text ────────────────────────── */
+.dark .chat-placeholder {
+    color: var(--dm-text) !important;
+}
+
+/* ── Typing dots ─────────────────────────────── */
+.dark .typing-dot {
+    background: var(--dm-accent) !important;
+}
+
+/* ── Chat input ──────────────────────────────── */
+.dark .chat-input textarea {
+    background: rgba(20, 20, 30, 0.7) !important;
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text) !important;
+}
+
+.dark .chat-input textarea::placeholder {
+    color: var(--dm-text-muted);
+}
+
+.dark .chat-input button {
+    background-color: #1e2030 !important;
+    color: var(--dm-text) !important;
+}
+
+.dark .chat-input button:hover {
+    background-color: var(--dm-chat-user) !important;
+    color: #fff !important;
+}
+
+/* ── Popups (history / info / contact) ───────── */
+.dark .history-popup {
+    background: linear-gradient(145deg, rgba(22, 22, 32, 0.98) 0%, rgba(26, 26, 38, 0.99) 100%) !important;
+    border-color: var(--dm-border) !important;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .history-popup h3 {
+    color: var(--dm-text) !important;
+}
+
+.dark .history-popup h3::after {
+    background: linear-gradient(90deg, rgba(224, 136, 128, 0.3), transparent) !important;
+}
+
+.dark .history-popup p,
+.dark .history-popup span,
+.dark .history-popup .session-title,
+.dark .history-popup .session-preview,
+.dark .history-popup li {
+    color: var(--dm-text) !important;
+}
+
+.dark .history-popup .session-meta span {
+    color: var(--dm-text-muted) !important;
+}
+
+.dark .history-popup li {
+    background: transparent !important;
+}
+
+.dark .history-popup li:hover {
+    color: var(--dm-accent) !important;
+    box-shadow: 0 4px 16px rgba(224, 136, 128, 0.12) !important;
+}
+
+.dark .history-popup li::after {
+    background: linear-gradient(135deg, var(--dm-accent-dim) 0%, transparent 100%) !important;
+}
+
+.dark .history-popup .session-icon {
+    background: var(--dm-accent-dim) !important;
+    color: var(--dm-accent) !important;
+}
+
+.dark .history-popup li:hover .session-icon,
+.dark .history-popup .session-item.active-session .session-icon {
+    background: linear-gradient(135deg, var(--dm-chat-user) 0%, #b85048 100%) !important;
+    color: #fff !important;
+}
+
+.dark .history-popup .session-item.active-session {
+    background: var(--dm-accent-dim2) !important;
+    border-color: rgba(224, 136, 128, 0.2) !important;
+}
+
+.dark .history-popup .delete-session-btn {
+    border-color: var(--dm-border) !important;
+    color: var(--dm-text-muted) !important;
+}
+
+.dark .history-popup .delete-session-btn:hover {
+    background: var(--dm-accent-dim) !important;
+    color: var(--dm-accent) !important;
+}
+
+.dark .history-popup .close-btn {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--dm-text-muted) !important;
+}
+
+.dark .history-popup .close-btn:hover {
+    background: var(--dm-accent-dim) !important;
+    color: var(--dm-accent) !important;
+}
+
+/* Popup action buttons */
+.dark .action-btn.new-chat-btn {
+    background: linear-gradient(135deg, var(--dm-chat-user) 0%, #b85048 100%) !important;
+}
+
+.dark .action-btn.clear-chat-btn {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: var(--dm-text-muted) !important;
+}
+
+.dark .action-btn.clear-chat-btn:hover {
+    background: var(--dm-accent-dim) !important;
+    color: var(--dm-accent) !important;
+}
+
+/* ── Overlay ─────────────────────────────────── */
+.dark .overlay {
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* ── Suggested Questions dropdown ────────────── */
+.dark .sq-category {
+    background: rgba(25, 25, 38, 0.85) !important;
+    border-color: var(--dm-border) !important;
+}
+
+.dark .sq-category.open {
+    background: rgba(30, 30, 48, 0.95) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .sq-header:hover {
+    background: var(--dm-accent-dim) !important;
+}
+
+.dark .sq-header-left .fas {
+    background: var(--dm-accent-dim) !important;
+    color: var(--dm-accent) !important;
+}
+
+.dark .sq-category.open .sq-header-left .fas {
+    background: linear-gradient(135deg, var(--dm-chat-user) 0%, #b85048 100%) !important;
+    color: #fff !important;
+}
+
+.dark .sq-label {
+    color: var(--dm-text) !important;
+}
+
+.dark .sq-chevron {
+    color: var(--dm-text-muted) !important;
+}
+
+.dark .sq-category.open .sq-chevron {
+    color: var(--dm-accent) !important;
+}
+
+.dark .sq-question {
+    color: var(--dm-text) !important;
+}
+
+.dark .sq-question:hover {
+    background: var(--dm-accent-dim) !important;
+    color: var(--dm-accent) !important;
+}
+
+.dark .sq-num {
+    background: var(--dm-accent-dim) !important;
+    color: var(--dm-accent) !important;
+}
+
+.dark .sq-question:hover .sq-num {
+    background: var(--dm-chat-user) !important;
+    color: #fff !important;
+}
+
+/* ── Logo responsive text ────────────────────── */
+.dark .logo-responsive span {
+    color: var(--dm-text) !important;
+}
+
+/* ── Message formatting (TextFormatter output) ── */
+.dark .window a {
+    color: var(--dm-accent) !important;
+}
+
+.dark .window code {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #d4a0ff !important;
+}
