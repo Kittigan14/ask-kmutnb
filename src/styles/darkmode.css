@@ -295,3 +295,12 @@
     background: rgba(255, 255, 255, 0.08) !important;
     color: #d4a0ff !important;
 }
+
+/* ── Sidebar header dark mode ────────────────── */
+.dark .sq-sidebar-header {
+    border-color: var(--dm-border) !important;
+}
+
+.dark .sq-sidebar-header span {
+    color: var(--dm-text) !important;
+}

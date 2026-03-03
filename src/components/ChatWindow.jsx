@@ -1,8 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import logo from "../assets/images/logo_kmutnb.png";
 import { formatKMUTNBMessage } from "../utils/TextFormatter";
-import SuggestedQuestions from "./SuggestedQuestions";
-import "../styles/suggestedQuestions.css";
 
 export default function ChatWindow({ messages, isTyping, onSelectQuestion }) {
   const chatWindowRef = useRef(null);
@@ -33,10 +31,8 @@ export default function ChatWindow({ messages, isTyping, onSelectQuestion }) {
           </p>
 
           <p style={{ marginTop: "0.6rem", marginBottom: "7px", fontWeight: 500, fontSize: "0.9rem", opacity: 0.75 }}>
-            หรือเลือกคำถามที่สนใจได้เลย 👇
+            หรือเลือกคำถามแนะนำได้จากแผงด้านขวา 👉
           </p>
-
-          <SuggestedQuestions onSelectQuestion={onSelectQuestion} />
         </div>
       )}
 

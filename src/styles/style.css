@@ -866,3 +866,81 @@ body {
         display: none;
     }
 }
+
+/* ─── Suggested Questions Sidebar ─────────────────────────── */
+.sq-sidebar {
+    position: fixed;
+    right: 0;
+    top: 75px;
+    bottom: 0;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 12px 20px;
+    overflow: hidden;
+    z-index: 100;
+    pointer-events: all;
+}
+
+.sq-sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px 14px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(211, 117, 107, 0.2);
+    flex-shrink: 0;
+}
+
+.sq-sidebar-header i {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #D3756B 0%, #c96158 100%);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(211, 117, 107, 0.35);
+    flex-shrink: 0;
+}
+
+.sq-sidebar-header span {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 0.3px;
+}
+
+.sq-sidebar .suggested-questions {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(211, 117, 107, 0.3) transparent;
+}
+
+.sq-sidebar .suggested-questions::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sq-sidebar .suggested-questions::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sq-sidebar .suggested-questions::-webkit-scrollbar-thumb {
+    background: rgba(211, 117, 107, 0.3);
+    border-radius: 6px;
+}
+
+.sq-sidebar .suggested-questions::-webkit-scrollbar-thumb:hover {
+    background: rgba(211, 117, 107, 0.5);
+}
+
+@media (max-width: 1280px) {
+    .sq-sidebar {
+        display: none;
+    }
+}

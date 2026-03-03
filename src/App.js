@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ChatWindow from "./components/ChatWindow";
 import ChatInput from "./components/ChatInput";
@@ -6,15 +7,20 @@ import HistoryPopup from "./components/HistoryPopup";
 import InfoPanel from "./components/InfoPanel";
 import ContactPopup from "./components/ContactPopup";
 import Overlay from "./components/Overlay";
+import SuggestedQuestions from "./components/SuggestedQuestions";
+import AdminLogin from "./admin/AdminLogin";
+import AdminDashboard from "./admin/AdminDashboard";
+import AdminProtectedRoute from "./admin/AdminProtectedRoute";
 import { getCurrentSessionId, loadChatHistory } from "./scripts/session";
 import { initSessionManagement, handleNewChatButton } from "./scripts/popup";
 import "./styles/style.css";
 import "./styles/session.css";
 import "./styles/messageFormatting.css";
 import "./styles/darkmode.css";
+import "./styles/suggestedQuestions.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-export default function App() {
+function ChatApp() {
   const [activePopup, setActivePopup] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -51,12 +57,8 @@ export default function App() {
     console.log("Current session:", sessionId, "Messages:", history.length);
 
     initSessionManagement(
-      (newMessages) => {
-        setMessages(newMessages);
-      },
-      (newMessages) => {
-        setMessages(newMessages);
-      }
+      (newMessages) => { setMessages(newMessages); },
+      (newMessages) => { setMessages(newMessages); }
     );
   }, []);
 
@@ -72,29 +74,21 @@ export default function App() {
   };
 
   const openPopup = (popupName) => {
-    console.log("Opening popup:", popupName);
     setActivePopup(popupName);
     setMenuOpen(false);
   };
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleMenu = () => { setMenuOpen(!menuOpen); };
 
   const handleSessionChange = (newMessages) => {
     setMessages(newMessages);
     closeAllPopups();
   };
 
-
-
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape') {
-        closeAllPopups();
-      }
+      if (e.key === 'Escape') closeAllPopups();
     };
-
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
@@ -124,6 +118,14 @@ export default function App() {
         />
       </section>
 
+      <aside className="sq-sidebar">
+        <div className="sq-sidebar-header">
+          <i className="fas fa-lightbulb"></i>
+          <span>คำถามแนะนำ</span>
+        </div>
+        <SuggestedQuestions onSelectQuestion={handleSelectQuestion} />
+      </aside>
+
       {activePopup === "history" && (
         <HistoryPopup
           onClose={closeAllPopups}
@@ -144,5 +146,22 @@ export default function App() {
         onClick={closeAllPopups}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<ChatApp />} />
+      <Route path="/login/admin" element={<AdminLogin />} />
+      <Route
+        path="/admin/*"
+        element={
+          <AdminProtectedRoute>
+            <AdminDashboard />
+          </AdminProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }
