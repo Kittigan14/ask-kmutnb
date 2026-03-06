@@ -29,10 +29,7 @@ export default function ChatWindow({ messages, isTyping, onSelectQuestion }) {
           <p style={{ marginTop: "0.2rem", fontWeight: 500 }}>
             แชทบอทผู้ช่วยตอบทุกคำถามเกี่ยวกับมหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ
           </p>
-
-          <p style={{ marginTop: "0.6rem", marginBottom: "7px", fontWeight: 500, fontSize: "0.9rem", opacity: 0.75 }}>
-            หรือเลือกคำถามแนะนำได้จากแผงด้านขวา 👉
-          </p>
+          
         </div>
       )}
 

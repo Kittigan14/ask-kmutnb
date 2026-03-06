@@ -1,9 +1,3 @@
-/* ═══════════════════════════════════════════════
-   DARK MODE — ASK KMUTNB
-   Applied via: document.documentElement class="dark"
-   ═══════════════════════════════════════════════ */
-
-/* ── Dark mode toggle button (in Navbar) ─────── */
 .dark-toggle {
     background: none;
     border: none;

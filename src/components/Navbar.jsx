@@ -52,9 +52,9 @@ export default function Navbar({
           </a>
         </li>
         <li>
-          <a href="#" onClick={handleMenuClick("info")}>
-            <i className="fa-solid fa-circle-info"></i>
-            <span>ชี้แจงระบบ</span>
+          <a href="#" onClick={handleMenuClick("suggested")}>
+            <i className="fa-solid fa-lightbulb"></i>
+            <span>คำถามแนะนำ</span>
           </a>
         </li>
         <li>
