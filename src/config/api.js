@@ -4,13 +4,13 @@ const CORS_PROXIES = {
   thingproxy: 'https://thingproxy.freeboard.io/fetch/'
 };
 
-const WEBHOOK_URL = 'https://n8n.r0und.xyz/webhook-test/Website';
+const WEBHOOK_URL = 'https://n8n.r0und.xyz/webhook/Website';
 
 export const API_CONFIG = {
   getWebhookURL: function () {
     if (this.USE_PROXY) {
       return this.PROXY + encodeURIComponent(WEBHOOK_URL);
-    }
+    } 
     return WEBHOOK_URL;
   },
 
