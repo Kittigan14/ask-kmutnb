@@ -1,6 +1,12 @@
 export const formatMessage = (text) => {
   if (!text) return "";
 
+  if (typeof text === "object") {
+    text = text.output || JSON.stringify(text);
+  } else if (typeof text !== "string") {
+    text = String(text);
+  }
+
   let formatted = text;
 
   formatted = formatted
@@ -110,7 +116,7 @@ export const formatKMUTNBMessage = (text) => {
 
   formatted = formatted.replace(
     /(\d+)\s*(หน่วยกิต|คน|ที่นั่ง)/g,
-'<span class="highlight-number"><span class="number-value">$1</span><span class="number-unit">$2</span></span>'
+    '<span class="highlight-number"><span class="number-value">$1</span><span class="number-unit">$2</span></span>'
   );
 
   formatted = formatted.replace(
