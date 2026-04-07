@@ -1129,7 +1129,8 @@
 }
 
 .edit-cat-card.expanded .edit-cat-body {
-    max-height: 600px;
+    max-height: 1200px;
+    overflow-y: auto;
 }
 
 .edit-questions-list {
