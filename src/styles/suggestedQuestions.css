@@ -94,9 +94,12 @@
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Each question is ~44px tall; give generous upper bound */
+/* Each question row; allow scroll if dropdown is taller than viewport area */
 .sq-category.open .sq-body {
-  max-height: calc(var(--count, 12) * 52px + 16px);
+  max-height: calc(var(--count, 12) * 52px + 24px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(211, 117, 107, 0.3) transparent;
 }
 
 .sq-list {
@@ -155,3 +158,71 @@
   background: #D3756B;
   color: #fff;
 }
+
+/* Webkit scrollbar for open dropdown body */
+.sq-category.open .sq-body::-webkit-scrollbar {
+  width: 3px;
+}
+.sq-category.open .sq-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sq-category.open .sq-body::-webkit-scrollbar-thumb {
+  background: rgba(211, 117, 107, 0.35);
+  border-radius: 4px;
+}
+
+/* ── Popup mode (modal overlay) overrides ──────────────── */
+.suggested-popup {
+  max-height: 82vh !important;
+  overflow-y: auto;
+  width: 92% !important;
+  max-width: 460px !important;
+}
+
+.suggested-popup .suggested-questions {
+  /* allow full height; container itself scrolls */
+  flex: unset;
+  overflow: visible;
+}
+
+/* Reset .history-popup ul li overrides inside suggested popup */
+.suggested-popup ul.sq-list {
+  list-style: none;
+  padding: 4px 10px 10px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: static;
+  z-index: auto;
+}
+
+.suggested-popup ul.sq-list li {
+  padding: 0 !important;
+  margin-bottom: 0 !important;
+  background: transparent !important;
+  cursor: default !important;
+  transition: none !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  display: block !important;
+  position: static !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.suggested-popup ul.sq-list li::before,
+.suggested-popup ul.sq-list li::after {
+  display: none !important;
+  content: none !important;
+}
+
+.suggested-popup ul.sq-list li:hover {
+  padding-left: 0 !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  background: transparent !important;
+}
+
+

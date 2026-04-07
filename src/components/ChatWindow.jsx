@@ -29,30 +29,30 @@ export default function ChatWindow({ messages, isTyping, onSelectQuestion }) {
           <p style={{ marginTop: "0.2rem", fontWeight: 500 }}>
             แชทบอทผู้ช่วยตอบทุกคำถามเกี่ยวกับมหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ
           </p>
-
-          <p style={{ marginTop: "0.6rem", marginBottom: "7px", fontWeight: 500, fontSize: "0.9rem", opacity: 0.75 }}>
-            หรือเลือกคำถามแนะนำได้จากแผงด้านขวา 👉
-          </p>
+          
         </div>
       )}
 
-      {messages.map((msg, idx) => (
-        <div
-          key={idx}
-          className={`message ${msg.sender === "user" ? "chat-user" : "chat-ai"
-            } fade-in`}
-        >
-          {msg.sender === "user" ? (
-            <span>{msg.text}</span>
-          ) : (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: formatKMUTNBMessage(msg.text),
-              }}
-            />
-          )}
-        </div>
-      ))}
+      {messages.map((msg, idx) => {
+        const messageText = typeof msg.text === 'object' ? msg.text.output || '' : msg.text;
+
+        return (
+          <div
+            key={idx}
+            className={`message ${msg.sender === "user" ? "chat-user" : "chat-ai"} fade-in`}
+          >
+            {msg.sender === "user" ? (
+              <span>{messageText}</span>
+            ) : (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: formatKMUTNBMessage(messageText),
+                }}
+              />
+            )}
+          </div>
+        );
+      })}
 
       {isTyping && (
         <div className="message chat-ai typing-indicator fade-in">

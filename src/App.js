@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import ChatWindow from "./components/ChatWindow";
 import ChatInput from "./components/ChatInput";
 import HistoryPopup from "./components/HistoryPopup";
-import InfoPanel from "./components/InfoPanel";
+
 import ContactPopup from "./components/ContactPopup";
 import Overlay from "./components/Overlay";
 import SuggestedQuestions from "./components/SuggestedQuestions";
@@ -118,13 +118,6 @@ function ChatApp() {
         />
       </section>
 
-      <aside className="sq-sidebar">
-        <div className="sq-sidebar-header">
-          <i className="fas fa-lightbulb"></i>
-          <span>คำถามแนะนำ</span>
-        </div>
-        <SuggestedQuestions onSelectQuestion={handleSelectQuestion} />
-      </aside>
 
       {activePopup === "history" && (
         <HistoryPopup
@@ -133,8 +126,16 @@ function ChatApp() {
         />
       )}
 
-      {activePopup === "info" && (
-        <InfoPanel onClose={closeAllPopups} />
+      {activePopup === "suggested" && (
+        <div className={`history-popup suggested-popup active`}>
+          <button className="close-btn" onClick={closeAllPopups}>
+            <i className="fa-solid fa-times"></i>
+          </button>
+          <h3>
+            <i className="fas fa-lightbulb"></i> คำถามแนะนำ
+          </h3>
+          <SuggestedQuestions onSelectQuestion={(q) => { handleSelectQuestion(q); closeAllPopups(); }} />
+        </div>
       )}
 
       {activePopup === "contact" && (
